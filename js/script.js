@@ -58,10 +58,6 @@ const createPost = (id, author, photo, date, description, image, likesNuber) => 
     return newPost;
 }
 
-const changeNumberOfLikes = () => {
-
-}
-
 const postsList = [
     { "id": 0, "author": 'Tunnuzzoo', "photo": 'https://unsplash.it/300/300?image=3', "date": '22/0771998', "description": 'description', "image": 'https://unsplash.it/300/300?image=170', "likesNumber": 23 },
     { "id": 0, "author": 'Instafraa', "photo": 'https://unsplash.it/300/300?image=2', "date": '21/04/2021', "description": 'description', "image": 'https://unsplash.it/300/300?image=171', "likesNumber": 89 },
@@ -71,7 +67,6 @@ const postsList = [
 // # Milestone 2
 
 const postsContainer = document.getElementById('container');
-const likeButton = document.querySelector('.like-button');
 
 
 for (let i = 0; i < postsList.length; i++) {
@@ -80,7 +75,7 @@ for (let i = 0; i < postsList.length; i++) {
     currentPost["id"] = i + 1;
 
     let postInsert = `
-        <div class="post">
+        <div id="${currentPost["id"]}" class="post">
             <div class="post__header">
                 <div class="post-meta">
                     <div class="post-meta__icon">
@@ -99,10 +94,10 @@ for (let i = 0; i < postsList.length; i++) {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button js-like-button" href="#" data-postid="1">
+                        <button id="btn-${currentPost["id"]}" class="like-button js-like-button" data-postid="${currentPost["id"]}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
-                        </a>
+                        </button>
                     </div>
                     <div class="likes__counter">Piace a <b id="like-counter-1" class="js-likes-counter">${currentPost["likesNumber"]}</b> persone
                     </div>
@@ -114,4 +109,41 @@ for (let i = 0; i < postsList.length; i++) {
     postsContainer.innerHTML += postInsert;
 }
 
-likeButton.addEventListener('click', changeNumberOfLikes);
+const buttons = document.querySelectorAll('.js-like-button');
+const likes = document.querySelectorAll('.js-likes-counter');
+
+for (let i = 0; i < buttons.length; i++) {
+    const currentButton = buttons[i];
+
+    currentButton.addEventListener('click', (event) => {
+
+        if (currentButton.classList.contains('clicked')) {
+            // Qui bersagliamo il post all'i-esima posizione che corrisponde proprio a post legato al button
+            // sul quale sto definendo l'addEventListener
+            let currentPost = postsList[i];
+
+            // Decremento il numero di likes, questo però è fatto SOLO nell'array ma non in pagina
+            currentPost["likesNumber"]--;
+
+            // Decremento il numero di likes in pagina
+            likes[i].innerHTML = currentPost["likesNumber"];
+
+            //Elimina l'effetto di click sul bottone (Mostra il bordo e colora il testo)
+            currentButton.classList.remove('clicked');
+        } else {
+            //Aggiunge l'effetto di click sul bottone (Mostra il bordo e colora il testo)
+            currentButton.classList.add('clicked');
+
+            // Qui bersagliamo il post all'i-esima posizione che corrisponde proprio a post legato al button
+            // sul quale sto definendo l'addEventListener
+            let currentPost = postsList[i];
+
+            // Incremento il numero di likes, questo però è fatto SOLO nell'array ma non in pagina
+            currentPost["likesNumber"]++;
+
+            // Incremento il numero di likes in pagina
+            likes[i].innerHTML = currentPost["likesNumber"];
+        }
+    })
+}
+

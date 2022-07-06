@@ -109,7 +109,18 @@ h1 {
     border-radius: 8px;
     text-decoration: none;
     color: #404040;
+
+    border: 2px solid transparent;
 }
+
+.clicked {
+    border: 2px solid black;
+    color: dodgerblue;
+}
+
+/* .js-like-button {
+    border: 2px solid black;
+} */
 
 .like-button:not(.like-button--liked):hover {
     background-color: #e3e3e3
