@@ -59,7 +59,7 @@ const createPost = (id, author, photo, date, description, image, likesNuber) => 
 }
 
 const postsList = [
-    { "id": 0, "author": 'Tunnuzzoo', "photo": 'https://unsplash.it/300/300?image=3', "date": '22/0771998', "description": 'description', "image": 'https://unsplash.it/300/300?image=170', "likesNumber": 23 },
+    { "id": 0, "author": 'Tunnuzzoo', "photo": 'https://unsplash.it/300/300?image=3', "date": '21/04/2021', "description": 'description', "image": 'https://unsplash.it/300/300?image=170', "likesNumber": 23 },
     { "id": 0, "author": 'Instafraa', "photo": 'https://unsplash.it/300/300?image=2', "date": '21/04/2021', "description": 'description', "image": 'https://unsplash.it/300/300?image=171', "likesNumber": 89 },
     { "id": 0, "author": 'cavallo pazzo', "photo": 'https://unsplash.it/300/300?image=1', "date": '12/01/2013', "description": 'description', "image": 'https://unsplash.it/300/300?image=172', "likesNumber": 124 },
 ];
@@ -74,6 +74,8 @@ for (let i = 0; i < postsList.length; i++) {
 
     currentPost["id"] = i + 1;
 
+    const newDate = changeDate(currentPost["date"]);
+
     let postInsert = `
         <div id="${currentPost["id"]}" class="post">
             <div class="post__header">
@@ -83,7 +85,7 @@ for (let i = 0; i < postsList.length; i++) {
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${currentPost["author"]}</div>
-                        <div class="post-meta__time">${currentPost["date"]}</div>
+                        <div class="post-meta__time">${newDate}</div>
                     </div>
                 </div>
             </div>
@@ -108,6 +110,8 @@ for (let i = 0; i < postsList.length; i++) {
 
     postsContainer.innerHTML += postInsert;
 }
+
+// # MILESTONE 3
 
 const buttons = document.querySelectorAll('.js-like-button');
 const likes = document.querySelectorAll('.js-likes-counter');
@@ -145,5 +149,15 @@ for (let i = 0; i < buttons.length; i++) {
             likes[i].innerHTML = currentPost["likesNumber"];
         }
     })
+}
+
+function changeDate(date) {
+    let americanDate = '';
+
+    const day = date[0] + date[1] + date[2];
+    const mounth = date[3] + date[4] + date[5];
+    const year = date[6] + date[7] + date[8] + date[9];
+
+    return americanDate = mounth + day + year;
 }
 

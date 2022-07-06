@@ -118,10 +118,6 @@ h1 {
     color: dodgerblue;
 }
 
-/* .js-like-button {
-    border: 2px solid black;
-} */
-
 .like-button:not(.like-button--liked):hover {
     background-color: #e3e3e3
 }
